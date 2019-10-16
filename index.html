@@ -14,7 +14,8 @@
                 alert('微信打开');
                 getCode();
             } else {
-                alert('no')
+                alert('no');
+                getCode();
             }
         }
         function getAccessToken() {
@@ -58,7 +59,7 @@
             }
             var valArr = valStr.split('&');
             var value = null;
-            valStr.forEach(function (item) {
+            valArr.forEach(function (item) {
                 let subArr = item.split('=');
                 let subkey = subArr[0];
                 let subval = subArr[1];
