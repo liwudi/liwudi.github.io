@@ -42,7 +42,9 @@
             var url = encodeURIComponent('https://liwudi.github.io/');
             var openUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx0693a95edbd361ec&redirect_uri='+url+'response_type=code&scope=snsapi_base&state=123#wechat_redirect';
             if (!code) {
-                window.location.replace(openUrl);
+                alert(code);
+                alert(openUrl);
+                window.location.href = openUrl;
             } else {
                 alert(code);
                 // 获取openId
