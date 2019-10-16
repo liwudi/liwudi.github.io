@@ -3,6 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>我的个人信息</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        // 接口基础信息调用。
+        init();
+        function init() {
+            getAccessToken();
+            if (is_weixin()) {
+                alert('微信打开');
+                getCode();
+            } else {
+                alert('no')
+            }
+        }
+        function getAccessToken() {
+            if (localStorage.getItem('access_token')) {
+                return
+            }
+            var url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx0693a95edbd361ec&secret=9e0d2275635525f09b6631ebe95c9229';
+            $.get(url, function (res) {
+                localStorage.setItem('access_token', res.access_token);
+            })
+        }
+
+
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        // 获取用户code
+        function getCode() {
+            var code = getParam('code');
+            var url = encodeURIComponent('https://liwudi.github.io/');
+            var openUrl = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx520c15f417810387&redirect_uri='+url+'response_type=code&scope=snsapi_base&state=123#wechat_redirect';
+            if (!code) {
+                window.location.replace(openUrl);
+            } else {
+                alert(code);
+                // 获取openId
+            }
+        }
+        // 获取openId
+
+        // 工具函数
+        function getParam(key) {
+            var valStr = window.location.search;
+            if (valStr) {
+                valStr = valStr.substr(1);
+            }
+            var valArr = valStr.split('&');
+            var value = null;
+            valStr.forEach(function (item) {
+                let subArr = item.split('=');
+                let subkey = subArr[0];
+                let subval = subArr[1];
+                if (subkey === key) {
+                    value = subval;
+                }
+            });
+            return value;
+        }
+    </script>
 </head>
 <body>
     <div>
